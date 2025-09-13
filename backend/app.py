@@ -11,11 +11,13 @@ COLAB_API_BASE = os.getenv("COLAB_API_BASE", "").rstrip("/")
 def ai_chat():
     if not COLAB_API_BASE:
         return jsonify({"error": "COLAB_API_BASE no configurado"}), 500
+
     data = request.get_json(force=True) or {}
-    payload = {
-        "message": data.get("message", ""),
-        "history": data.get("history") or []
-    }
+    user_message = data.get("message", "")
+
+    # 👇 Colab espera 'prompt', no 'message'
+    payload = {"prompt": user_message}
+
     try:
         r = requests.post(f"{COLAB_API_BASE}/chat", json=payload, timeout=60)
         r.raise_for_status()
@@ -23,6 +25,7 @@ def ai_chat():
         return jsonify({"answer": res.get("answer", "")})
     except Exception as e:
         return jsonify({"error": str(e)}), 502
+
 
 @app.route("/health", methods=["GET"])
 def health():
