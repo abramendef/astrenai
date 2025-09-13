@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AstrenAI</title>
+    <link rel="stylesheet" href="css/ai.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <h1 class="app-title" tabindex="0">AstrenAI</h1>
+        <div class="header-actions">
+          <button id="openSettingsBtn" class="btn ghost" aria-haspopup="dialog" aria-controls="settingsModal">Settings</button>
+        </div>
+      </header>
+
+      <div class="language-note" aria-live="polite">Respondo en el idioma de tu mensaje.</div>
+
+      <div id="statusBar" class="status hidden" role="alert"></div>
+
+      <main id="chat" class="chat" aria-label="Conversación">
+        <!-- Mensajes renderizados aquí -->
+      </main>
+
+      <footer class="composer" aria-label="Escribir mensaje">
+        <label for="messageInput" class="sr-only">Mensaje para AstrenAI</label>
+        <textarea
+          id="messageInput"
+          class="input"
+          rows="2"
+          placeholder="Escribe un mensaje... (Enter = enviar, Shift+Enter = nueva línea)"
+          aria-label="Mensaje"
+        ></textarea>
+        <div class="actions">
+          <button id="sendBtn" class="btn primary" aria-label="Enviar">Enviar</button>
+          <button id="clearBtn" class="btn" aria-label="Limpiar chat">Limpiar</button>
+          <button id="copyLastBtn" class="btn" aria-label="Copiar último">Copiar último</button>
+          <button id="exportBtn" class="btn" aria-label="Exportar conversación">Exportar</button>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="modal-content" role="document">
+        <div class="modal-header">
+          <h2 id="settingsTitle">Settings</h2>
+          <button id="closeSettingsBtn" class="icon-btn" aria-label="Cerrar settings">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-field">
+            <label for="apiBaseInput">API Base URL</label>
+            <input id="apiBaseInput" type="url" inputmode="url" placeholder="https://955775a1c5c0.ngrok-free.app" />
+            <small class="hint">Ejemplo: http://localhost:8000 o una URL pública</small>
+          </div>
+          <div class="form-row">
+            <label class="switch">
+              <input id="sendHistoryToggle" type="checkbox" checked />
+              <span class="slider" aria-hidden="true"></span>
+              <span class="switch-label">Enviar historial</span>
+            </label>
+          </div>
+          <div class="form-row">
+            <label class="switch">
+              <input id="useSystemPromptToggle" type="checkbox" />
+              <span class="slider" aria-hidden="true"></span>
+              <span class="switch-label">Usar system prompt</span>
+            </label>
+          </div>
+          <div class="form-field">
+            <label for="systemPromptInput">System prompt (opcional)</label>
+            <input id="systemPromptInput" type="text" maxlength="300" placeholder="Ej.: Responde breve y claro." />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveSettingsBtn" class="btn primary">Guardar</button>
+          <button id="cancelSettingsBtn" class="btn">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/ai.js"></script>
+    <noscript>Activa JavaScript para usar AstrenAI.</noscript>
+  </body>
+  </html>
+
+
