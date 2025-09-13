@@ -50,6 +50,7 @@ body {
 .msg.user .bubble { background: #18324b; color: var(--text); border-top-right-radius: 4px; }
 .msg.ai { justify-content: flex-start; }
 .msg.ai .bubble { background: var(--surface-2); color: var(--text); border-top-left-radius: 4px; }
+.msg.ai.typing .bubble { opacity: 0.75; font-style: italic; }
 
 .chip { display: inline-block; background: var(--chip); color: var(--text); border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; margin: 0 4px; font-size: 12px; cursor: pointer; }
 

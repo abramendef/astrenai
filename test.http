@@ -1,0 +1,12 @@
+### Health check
+GET https://astrenai-backend.onrender.com/health
+Content-Type: application/json
+
+### Chat test
+POST https://astrenai-backend.onrender.com/ai/chat
+Content-Type: application/json
+
+{
+  "message": "Hola AstrenAI, ¿me puedes responder?",
+  "history": []
+}

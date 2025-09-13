@@ -12,8 +12,17 @@ const DEFAULT_SETTINGS = {
   systemPrompt: ""
 };
 
-// Default API Base (used only if no settings are stored yet)
-const DEFAULT_TEST_API = "http://localhost:8000";
+// Default API Base (prefer production backend if domain matches, else localhost)
+const DEFAULT_TEST_API = (function detectDefaultApiBase() {
+  try {
+    const host = (typeof location !== "undefined" && location.hostname) ? location.hostname : "";
+    // If hosted on Vercel custom domain, point to Render backend
+    if (host && !host.includes("localhost") && !host.startsWith("127.")) {
+      return "https://astrenai-backend.onrender.com";
+    }
+  } catch (_) { /* ignore */ }
+  return "http://localhost:8000";
+})();
 
 // Elements
 const chatEl = document.getElementById("chat");
@@ -38,6 +47,7 @@ const systemPromptInput = document.getElementById("systemPromptInput");
 // In-memory state
 let settings = loadSettings();
 let history = loadHistory();
+let typingElement = null;
 
 // If first run and apiBase is empty, initialize with default test URL and persist
 if (!settings.apiBase) {
@@ -98,10 +108,15 @@ function onSend() {
   pushMessage(userMsg);
   messageInput.value = "";
 
-  // Build payload
+  // Show typing indicator
+  showTyping();
+
+  // Build payload (limit history length to last 24 messages to control size)
+  const MAX_HISTORY = 24;
+  const trimmedHistory = settings.sendHistory ? history.slice(-MAX_HISTORY) : [];
   const payload = {
     message: messageToSend,
-    history: settings.sendHistory ? history.slice() : []
+    history: trimmedHistory
   };
 
   // Call backend
@@ -121,12 +136,14 @@ function onSend() {
     .then((data) => {
       const answer = (data && (data.answer || data.response || data.text)) || "";
       const aiMsg = { role: "assistant", content: String(answer) };
+      removeTyping();
       pushMessage(aiMsg);
     })
     .catch((err) => {
       console.error(err);
       showError("No se pudo obtener respuesta de la API. Revisa la URL, CORS o tu conexión.");
       const errorMsg = { role: "assistant", content: "[Error] No se pudo responder. Intenta de nuevo." };
+      removeTyping();
       pushMessage(errorMsg);
     })
     .finally(() => setSending(false));
@@ -221,6 +238,26 @@ function appendMessageToUI(msg) {
 
   wrapper.appendChild(bubble);
   chatEl.appendChild(wrapper);
+}
+
+function showTyping() {
+  removeTyping();
+  const wrapper = document.createElement("div");
+  wrapper.className = "msg ai typing";
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = "Escribiendo…";
+  wrapper.appendChild(bubble);
+  chatEl.appendChild(wrapper);
+  typingElement = wrapper;
+  scrollToBottom();
+}
+
+function removeTyping() {
+  if (typingElement && typingElement.parentNode) {
+    typingElement.parentNode.removeChild(typingElement);
+  }
+  typingElement = null;
 }
 
 function renderHistory() {
