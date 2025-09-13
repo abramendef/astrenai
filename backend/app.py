@@ -24,6 +24,11 @@ def ai_chat():
     except Exception as e:
         return jsonify({"error": str(e)}), 502
 
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"ok": True})
+
+
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 8000))
