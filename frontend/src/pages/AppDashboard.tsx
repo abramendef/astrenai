@@ -18,7 +18,7 @@ import {
   Clock
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import StarChat from './StarChat';
+import StarChat from '@/components/StarChat';
 
 const AppDashboard: React.FC = () => {
   const { user, logout } = useAuth();
