@@ -1,0 +1,16 @@
+# Render Configuration for AstrenAI
+services:
+  - type: web
+    name: astrenai-backend
+    env: python
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: python src/star_api_render.py
+    pythonVersion: 3.11.0
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false  # Debe configurarse manualmente en Render
+      - key: PORT
+        value: 8000
+      - key: HOST
+        value: 0.0.0.0
