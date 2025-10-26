@@ -51,7 +51,7 @@ const StarChat: React.FC = () => {
       const apiUrl = import.meta.env.VITE_API_URL || 
         (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
           ? 'http://localhost:8000'
-          : 'https://astrenai-backend.onrender.com';
+          : 'https://astrenai-backend-lj3d.onrender.com';
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: {
