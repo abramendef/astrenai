@@ -47,11 +47,11 @@ const StarChat: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Detectar automáticamente el entorno y usar la URL correcta
-      const apiUrl = import.meta.env.VITE_API_URL || 
-        (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-          ? 'http://localhost:8000'
-          : 'https://astrenai-backend-lj3d.onrender.com';
+      // Usar siempre la URL de producción para evitar problemas de detección
+      const apiUrl = 'https://astrenai-backend-lj3d.onrender.com';
+      console.log('Enviando mensaje a:', `${apiUrl}/api/chat`);
+      console.log('Mensaje:', inputMessage);
+      
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: {
@@ -63,11 +63,16 @@ const StarChat: React.FC = () => {
         }),
       });
 
+      console.log('Respuesta del servidor:', response.status, response.statusText);
+      
       if (!response.ok) {
-        throw new Error('Error en la respuesta del servidor');
+        const errorText = await response.text();
+        console.error('Error del servidor:', errorText);
+        throw new Error(`Error en la respuesta del servidor: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log('Datos recibidos:', data);
       
       const starMessage: Message = {
         id: (Date.now() + 1).toString(),
