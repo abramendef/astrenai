@@ -25,21 +25,22 @@ const StarChat: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
-  useEffect(() => {
-    // Solo hacer scroll si hay mensajes nuevos y no estamos en la parte superior
-    if (messages.length > 0) {
-      const messagesContainer = messagesEndRef.current?.parentElement;
-      if (messagesContainer) {
-        const isNearBottom = messagesContainer.scrollTop + messagesContainer.clientHeight >= messagesContainer.scrollHeight - 100;
-        if (isNearBottom) {
-          scrollToBottom();
-        }
-      }
-    }
-  }, [messages]);
+  // Remover el useEffect problemático que causa scroll hacia arriba
+  // useEffect(() => {
+  //   // Solo hacer scroll si hay mensajes nuevos y no estamos en la parte superior
+  //   if (messages.length > 0) {
+  //     const messagesContainer = messagesEndRef.current?.parentElement;
+  //     if (messagesContainer) {
+  //       const isNearBottom = messagesContainer.scrollTop + messagesContainer.clientHeight >= messagesContainer.scrollHeight - 100;
+  //       if (isNearBottom) {
+  //         scrollToBottom();
+  //       }
+  //     }
+  //   }
+  // }, [messages]);
 
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
@@ -88,7 +89,7 @@ const StarChat: React.FC = () => {
       // Scroll suave solo cuando Star responde
       setTimeout(() => {
         scrollToBottom();
-      }, 100);
+      }, 200);
     } catch (error) {
       console.error('Error:', error);
       const errorMessage: Message = {
@@ -111,7 +112,7 @@ const StarChat: React.FC = () => {
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto h-[500px] flex flex-col border border-gray-200 shadow-lg">
+    <Card className="w-full max-w-4xl mx-auto h-[600px] flex flex-col border border-gray-200 shadow-lg">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-purple-600">
           <Bot className="h-6 w-6" />
@@ -121,7 +122,7 @@ const StarChat: React.FC = () => {
       
       <CardContent className="flex-1 flex flex-col p-0">
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 max-h-[450px]">
           {messages.map((message) => (
             <div
               key={message.id}
