@@ -1,8 +1,12 @@
 import { Star, Menu, X, UserPlus, LogIn } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import AuthModal from "./AuthModal";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const { user } = useAuth();
 
   const scrollToSection = (id: string) => {
     if (id === "hero") {
@@ -88,19 +92,32 @@ const Header = () => {
 
         {/* Desktop Actions */}
         <div className="hidden lg:flex items-center gap-4">
-          <button 
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white text-purple-600 border-2 border-purple-600 rounded-lg font-medium hover:bg-purple-600 hover:text-white transition-all duration-200 hover:-translate-y-0.5"
-            onClick={() => scrollToSection("chat")}
-          >
-            <UserPlus className="w-4 h-4" />
-            <span className="hidden sm:inline">Registrarse</span>
-          </button>
-          <button 
-            className="inline-flex items-center gap-2 px-4 py-2 bg-transparent text-gray-600 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 hover:-translate-y-0.5"
-          >
-            <LogIn className="w-4 h-4" />
-            <span className="hidden sm:inline">Iniciar Sesión</span>
-          </button>
+          {user ? (
+            <button 
+              className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all duration-200 hover:-translate-y-0.5"
+              onClick={() => window.location.href = '/app'}
+            >
+              <Star className="w-4 h-4" />
+              <span className="hidden sm:inline">Ir a la App</span>
+            </button>
+          ) : (
+            <>
+              <button 
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white text-purple-600 border-2 border-purple-600 rounded-lg font-medium hover:bg-purple-600 hover:text-white transition-all duration-200 hover:-translate-y-0.5"
+                onClick={() => setShowAuthModal(true)}
+              >
+                <UserPlus className="w-4 h-4" />
+                <span className="hidden sm:inline">Registrarse</span>
+              </button>
+              <button 
+                className="inline-flex items-center gap-2 px-4 py-2 bg-transparent text-gray-600 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 hover:-translate-y-0.5"
+                onClick={() => setShowAuthModal(true)}
+              >
+                <LogIn className="w-4 h-4" />
+                <span className="hidden sm:inline">Iniciar Sesión</span>
+              </button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -167,22 +184,40 @@ const Header = () => {
           </ul>
           
           <div className="pt-6 border-t border-gray-200 space-y-4">
-            <button 
-              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-white text-purple-600 border-2 border-purple-600 rounded-lg font-medium hover:bg-purple-600 hover:text-white transition-all duration-200"
-              onClick={() => scrollToSection("chat")}
-            >
-              <UserPlus className="w-4 h-4" />
-              Registrarse
-            </button>
-            <button 
-              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-transparent text-gray-600 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
-            >
-              <LogIn className="w-4 h-4" />
-              Iniciar Sesión
-            </button>
+            {user ? (
+              <button 
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all duration-200"
+                onClick={() => window.location.href = '/app'}
+              >
+                <Star className="w-4 h-4" />
+                Ir a la App
+              </button>
+            ) : (
+              <>
+                <button 
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-white text-purple-600 border-2 border-purple-600 rounded-lg font-medium hover:bg-purple-600 hover:text-white transition-all duration-200"
+                  onClick={() => setShowAuthModal(true)}
+                >
+                  <UserPlus className="w-4 h-4" />
+                  Registrarse
+                </button>
+                <button 
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-transparent text-gray-600 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
+                  onClick={() => setShowAuthModal(true)}
+                >
+                  <LogIn className="w-4 h-4" />
+                  Iniciar Sesión
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
+      
+      {/* Auth Modal */}
+      {showAuthModal && (
+        <AuthModal onClose={() => setShowAuthModal(false)} />
+      )}
     </header>
   );
 };
