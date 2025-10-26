@@ -47,10 +47,8 @@ const StarChat: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Usar siempre la URL de producción para evitar problemas de detección
+      // URL del backend en producción
       const apiUrl = 'https://astrenai-backend-lj3d.onrender.com';
-      console.log('Enviando mensaje a:', `${apiUrl}/api/chat`);
-      console.log('Mensaje:', inputMessage);
       
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
@@ -63,16 +61,11 @@ const StarChat: React.FC = () => {
         }),
       });
 
-      console.log('Respuesta del servidor:', response.status, response.statusText);
-      
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error del servidor:', errorText);
-        throw new Error(`Error en la respuesta del servidor: ${response.status}`);
+        throw new Error('Error en la respuesta del servidor');
       }
 
       const data = await response.json();
-      console.log('Datos recibidos:', data);
       
       const starMessage: Message = {
         id: (Date.now() + 1).toString(),
