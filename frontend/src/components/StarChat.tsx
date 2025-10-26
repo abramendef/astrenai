@@ -25,11 +25,20 @@ const StarChat: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Solo hacer scroll si hay mensajes nuevos y no estamos en la parte superior
+    if (messages.length > 0) {
+      const messagesContainer = messagesEndRef.current?.parentElement;
+      if (messagesContainer) {
+        const isNearBottom = messagesContainer.scrollTop + messagesContainer.clientHeight >= messagesContainer.scrollHeight - 100;
+        if (isNearBottom) {
+          scrollToBottom();
+        }
+      }
+    }
   }, [messages]);
 
   const sendMessage = async () => {
@@ -75,6 +84,11 @@ const StarChat: React.FC = () => {
       };
 
       setMessages(prev => [...prev, starMessage]);
+      
+      // Scroll suave solo cuando Star responde
+      setTimeout(() => {
+        scrollToBottom();
+      }, 100);
     } catch (error) {
       console.error('Error:', error);
       const errorMessage: Message = {
