@@ -95,7 +95,7 @@ const Header = () => {
           {user ? (
             <button 
               className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all duration-200 hover:-translate-y-0.5"
-              onClick={() => window.location.href = '/app'}
+              onClick={() => window.location.href = '#/app'}
             >
               <Star className="w-4 h-4" />
               <span className="hidden sm:inline">Ir a la App</span>
@@ -187,7 +187,7 @@ const Header = () => {
             {user ? (
               <button 
                 className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all duration-200"
-                onClick={() => window.location.href = '/app'}
+                onClick={() => window.location.href = '#/app'}
               >
                 <Star className="w-4 h-4" />
                 Ir a la App
