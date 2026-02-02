@@ -186,5 +186,5 @@ Este proyecto demuestra competencias en:
 ---
 
 **Desarrollo**: AstrenAI  
-**Última Actualización**: Enero 2026
+**Última Actualización**: Enero 2026  
 **Versión**: 0.1.0
