@@ -51,6 +51,10 @@ async def chat_with_star(request: ChatRequest):
 async def health_check():
     return {"status": "healthy", "message": "Star is ready"}
 
+@app.head("/api/health")
+async def health_check_head():
+    return
+
 # Servir archivos estáticos del frontend
 if os.path.exists("public"):
     app.mount("/static", StaticFiles(directory="public"), name="static")
