@@ -6,6 +6,7 @@ import AuthModal from "./AuthModal";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authModalType, setAuthModalType] = useState<'login' | 'register'>('login');
   const { user } = useAuth();
 
   const scrollToSection = (id: string) => {
@@ -104,14 +105,14 @@ const Header = () => {
             <>
               <button 
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white text-purple-600 border-2 border-purple-600 rounded-lg font-medium hover:bg-purple-600 hover:text-white transition-all duration-200 hover:-translate-y-0.5"
-                onClick={() => setShowAuthModal(true)}
+                onClick={() => { setAuthModalType('register'); setShowAuthModal(true); }}
               >
                 <UserPlus className="w-4 h-4" />
                 <span className="hidden sm:inline">Registrarse</span>
               </button>
               <button 
                 className="inline-flex items-center gap-2 px-4 py-2 bg-transparent text-gray-600 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 hover:-translate-y-0.5"
-                onClick={() => setShowAuthModal(true)}
+                onClick={() => { setAuthModalType('login'); setShowAuthModal(true); }}
               >
                 <LogIn className="w-4 h-4" />
                 <span className="hidden sm:inline">Iniciar Sesión</span>
@@ -196,14 +197,14 @@ const Header = () => {
               <>
                 <button 
                   className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-white text-purple-600 border-2 border-purple-600 rounded-lg font-medium hover:bg-purple-600 hover:text-white transition-all duration-200"
-                  onClick={() => setShowAuthModal(true)}
+                  onClick={() => { setAuthModalType('register'); setShowAuthModal(true); }}
                 >
                   <UserPlus className="w-4 h-4" />
                   Registrarse
                 </button>
                 <button 
                   className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-transparent text-gray-600 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
-                  onClick={() => setShowAuthModal(true)}
+                  onClick={() => { setAuthModalType('login'); setShowAuthModal(true); }}
                 >
                   <LogIn className="w-4 h-4" />
                   Iniciar Sesión
@@ -216,7 +217,7 @@ const Header = () => {
       
       {/* Auth Modal */}
       {showAuthModal && (
-        <AuthModal onClose={() => setShowAuthModal(false)} />
+        <AuthModal onClose={() => setShowAuthModal(false)} defaultTab={authModalType} />
       )}
     </header>
   );

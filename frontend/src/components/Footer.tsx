@@ -50,22 +50,22 @@ const Footer = () => {
             <h3 className="font-semibold text-gray-900">Ecosistema Astren</h3>
             <ul className="space-y-3 text-sm text-gray-600">
               <li>
-                <a href="#" className="hover:text-purple-600 transition-colors flex items-center gap-2">
+                <a href="https://gpr.astren.app" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors flex items-center gap-2">
                   AstrenGPR <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-purple-600 transition-colors flex items-center gap-2">
+                <a href="https://ai.astren.app" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors flex items-center gap-2">
                   AstrenAI <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-purple-600 transition-colors flex items-center gap-2">
+                <a href="https://games.astren.app" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors flex items-center gap-2">
                   AstrenGames <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-purple-600 transition-colors flex items-center gap-2">
+                <a href="https://astren.app" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors flex items-center gap-2">
                   Sitio Principal <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
