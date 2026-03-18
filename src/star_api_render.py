@@ -10,10 +10,16 @@ from star_groq import StarChatGroq
 # Inicializar FastAPI
 app = FastAPI(title="AstrenAI - Star API", version="1.0.0")
 
-# Configurar CORS para permitir conexiones desde cualquier origen
+# Configurar CORS para permitir conexiones desde el frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # En producción, especificar dominios específicos
+    allow_origins=[
+        "http://localhost:5173", 
+        "http://localhost:3000",
+        "https://ai.astren.app",
+        "https://astrenai-backend-lj3d.onrender.com",
+        "*"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
