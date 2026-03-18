@@ -57,8 +57,8 @@ const StarChat: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // URL del backend en producción
-      const apiUrl = 'https://astrenai-backend-lj3d.onrender.com';
+      // URL del backend definida por variables de entorno o la de producción por defecto
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://astrenai.onrender.com';
       
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
